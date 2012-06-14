@@ -8,8 +8,8 @@ class PagesController < ApplicationController
     # get urls for loading
     @images = []
     count = params[:count]
-    count.to_i.times do |i|
-      @images << getKitty
+    28.times do |i|
+      @images << getKitty(i+1)
     end
   end
   
@@ -25,8 +25,9 @@ class PagesController < ApplicationController
     end
   end
 
-  def getKitty 
-    File.join("http://placekitten.com", (500 + rand(20)).to_s, (500 + rand(20)).to_s)
+  def getKitty i
+    # File.join("http://placekitten.com", (500 + rand(20)).to_s, (500 + rand(20)).to_s)
+    "http://sfcalendars.demo.tknoc.com/dsmo3/AD1/43/F9/2B3387DD5B9365FF54947900C04B_#{sprintf '%03d', i}.jpg?#{timeStamp}"
   end
   
   def saveKitty here
