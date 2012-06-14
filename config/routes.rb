@@ -1,6 +1,8 @@
 JavascriptTestingGround::Application.routes.draw do
   get "pages/home"
-
+  get "pages/get_images/:count", :controller=>"pages", :action=>"get_images", :as => :get_images
+  get "pages/download_images/:count", :controller=>"pages", :action=>"download_images", :as => :download_images
+  
   resources :logs
   root :to => "pages#home"
   # The priority is based upon order of creation:

@@ -2,8 +2,10 @@
 <div id="sidebar">
   <ul>
     <li>
-      <input id="test-button" type="button" value="Test">
       <input id="test-count" type="number" min="1" max="10000" value="10">
+      <input id="test-button" type="button" value="Test">
+      <input id="test-get" type="button" value="Test Get">
+      <input id="test-download" type="button" value="Test Download" >
     </li>
   </ul>
 </div>
@@ -17,7 +19,8 @@
   
   function getImage(w,h) {
     // get image
-    var cat_url = "http://placekitten.com/" + w +"/" + h
+    var tstamp = timeStamp();
+    var cat_url = "http://lorempixel.com/" + w +"/" + h + "?" + tstamp;
     return cat_url;
   }
   
@@ -37,8 +40,11 @@
   
   function loadImages() {
     var count = $("#test-count").val();
-    var base_w = 1300;
-    var base_h = 1300;
+    var base_w = 600;
+    var base_h = 400;
+    
+    // clear images
+    $("#images-container ul").html("");
     // get X number of urls to load
     for (var i=0;i<count;i++){
       var new_image = getImage(base_w+i,base_h+i);
@@ -51,6 +57,16 @@
     }
   }
   
+  function getImages() {
+    var count = $("#test-count").val();
+    $.get("pages/get_images/"+count,null,null,"script")
+  }
+  
+  function downloadImages() {
+    var count = $("#test-count").val();
+    $.get("pages/download_images/"+count,null,null,"script");
+  }
+  
   function timeStamp(){
     var today =  new Date();
     var dd    = today.getDay();
@@ -59,7 +75,7 @@
     var h     = today.getHours();
     var m     = today.getMinutes();
     var s    = today.getSeconds();
-    var ms   = today.getMilliSeconds();
+    var ms   = today.getMilliseconds();
     
     // format for easy consumption
     if(dd<10){dd='0'+dd} 
@@ -76,5 +92,7 @@
     
   $(function() {
     $("#test-button").click( loadImages );  
+    $("#test-get").click( getImages);
+    $("#test-download").click( downloadImages);
   })
 </script>
