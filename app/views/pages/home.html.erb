@@ -1,0 +1,80 @@
+<h1>Test Images</h1>
+<div id="sidebar">
+  <ul>
+    <li>
+      <input id="test-button" type="button" value="Test">
+      <input id="test-count" type="number" min="1" max="10000" value="10">
+    </li>
+  </ul>
+</div>
+<div id="images-container">
+  <ul>
+    
+  </ul>
+</div>
+
+<script>
+  
+  function getImage(w,h) {
+    // get image
+    var cat_url = "http://placekitten.com/" + w +"/" + h
+    return cat_url;
+  }
+  
+  function errorHandler(image){
+    // do something is an image load fails
+    alert("OMG Andrew was right!");
+  }
+  
+  function loadImage(obj){
+    $(obj).load(function(){
+      var l_image = $(this);
+    }).error(function(){
+      var image = $(this);
+      errorHandler(image);
+    });
+  }
+  
+  function loadImages() {
+    var count = $("#test-count").val();
+    var base_w = 1300;
+    var base_h = 1300;
+    // get X number of urls to load
+    for (var i=0;i<count;i++){
+      var new_image = getImage(base_w+i,base_h+i);
+      // add image to dom
+      var new_elm = "<li><img src='" + new_image + "' /></li>"
+      $("#images-container ul").append(new_elm); 
+      var last_elm = $("#images-container ul li").last();
+      // load image
+      loadImage(last_elm);
+    }
+  }
+  
+  function timeStamp(){
+    var today =  new Date();
+    var dd    = today.getDay();
+    var mm    = today.getMonth();
+    var yyyy  = today.getFullYear();
+    var h     = today.getHours();
+    var m     = today.getMinutes();
+    var s    = today.getSeconds();
+    var ms   = today.getMilliSeconds();
+    
+    // format for easy consumption
+    if(dd<10){dd='0'+dd} 
+    if(mm<10){mm='0'+mm} 
+    if(h<10){h='0'+h} 
+    if(m<10){m='0'+m} 
+    if(s<10){s='0'+s} 
+    if(ms<10){ms='0'+ms}
+    
+    var timestamp = mm+'/'+dd+'/'+yyyy + "-" + h+":"+m+":"+s+"."+ms ;
+    
+    return timestamp;
+  }
+    
+  $(function() {
+    $("#test-button").click( loadImages );  
+  })
+</script>
